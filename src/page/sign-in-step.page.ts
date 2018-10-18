@@ -11,15 +11,9 @@ export class SignInStepPage {
     this.signInButton = $('#SubmitLogin > span');
   }
 
-  public async fillEmail(email: string): Promise<void> {
+  public async login(email: string, password: string): Promise<void> {
     await this.emailInput.sendKeys(email);
-  }
-
-  public async fillPassword(password: string): Promise<void> {
     await this.passwordInput.sendKeys(password);
-  }
-
-  public async submitLogin(): Promise<void> {
     await this.signInButton.click();
   }
 }
