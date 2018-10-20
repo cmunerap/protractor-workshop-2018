@@ -5,7 +5,7 @@ export class AddressStepPage {
 
   constructor () {
     this.proceedToCheckoutButton =
-        $('#center_column > form > p > button > span');
+        $('.cart_navigation > button[name="processAddress"]');
   }
 
   public async proceedToCheckout(): Promise<void> {

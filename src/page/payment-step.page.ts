@@ -5,7 +5,7 @@ export class PaymentStepPage {
 
   constructor () {
     this.payByBankWireButton =
-        $('#HOOK_PAYMENT > div:nth-child(1) > div > p > a');
+        $('#HOOK_PAYMENT a[title="Pay by bank wire"]');
   }
 
   public async payByBankWire(): Promise<void> {

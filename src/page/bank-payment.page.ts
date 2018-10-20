@@ -5,7 +5,7 @@ export class BankPaymentPage {
 
   constructor () {
     this.orderIsCompleteTitle =
-        $('#center_column > div > p > strong');
+        $('#center_column > .box > .cheque-indent > strong');
   }
 
   public orderIsCompleteText(): promise.Promise<string> {

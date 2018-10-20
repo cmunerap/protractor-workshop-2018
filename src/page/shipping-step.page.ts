@@ -9,7 +9,7 @@ export class ShippingStepPage {
         $('#cgv');
 
     this.proceedToCheckoutButton =
-        $('#form > p > button > span');
+        $('.cart_navigation > button[name="processCarrier"]');
   }
 
   public async agreeWithTerms(): Promise<void> {
