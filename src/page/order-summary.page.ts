@@ -5,7 +5,7 @@ export class OrderSummaryPage {
 
   constructor () {
     this.confirmMyOrderButton =
-        $('#cart_navigation > button > span');
+        $('#cart_navigation > button[type="submit"]');
   }
 
   public async confirmMyOrder(): Promise<void> {

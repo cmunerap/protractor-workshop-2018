@@ -5,7 +5,7 @@ export class SummaryStepPage {
 
   constructor () {
     this.proceedToCheckoutButton =
-        $('.cart_navigation span');
+        $('.cart_navigation a[title="Proceed to checkout"]');
   }
 
   public async proceedToCheckout(): Promise<void> {
