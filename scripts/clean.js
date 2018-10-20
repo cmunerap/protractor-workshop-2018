@@ -1,9 +1,13 @@
 var rimraf = require('rimraf');
 var _path = require('path');
-var dir = process.argv[2];
+var args = [...process.argv];
+args.splice(0, 2);
+var directories = args;
 
-if (!dir) {
-    return console.error('Please provide a folder name');
+if (!directories.length) {
+    return console.error('Please provide folders to be deleted');
 }
 
-rimraf(_path.join(dir), function () { return console.log('Deleted!'); });
+directories.forEach(dir => {
+    rimraf(_path.join(dir), () => { return console.log(`${dir} deleted!`); });
+});
