@@ -113,3 +113,6 @@ $RECYCLE.BIN/
 
 # Typescript
 dist
+
+# Reports
+reports
