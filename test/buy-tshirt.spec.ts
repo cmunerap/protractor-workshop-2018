@@ -27,7 +27,7 @@ describe('T-shirt purchase process start', () => {
 
     await menuContentPage.goToTShirtMenu();
 
-    await productListPage.addToCart();
+    await productListPage.selectProduct('Faded Short Sleeve T-shirts');
 
     await productAddedModalPage.proceedToCheckout();
 
