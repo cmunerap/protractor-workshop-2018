@@ -15,8 +15,9 @@ export class ProductListPage {
 
   private findByProduct(name: string): ElementFinder {
     return this.products
-    .filter(async product =>
-      await product.$('.right-block h5[itemprop="name"] .product-name').getText() === name
+    .filter(product =>
+      product.$('.right-block h5[itemprop="name"] .product-name').getText()
+      .then(text => text === name)
     )
     .first();
   }
