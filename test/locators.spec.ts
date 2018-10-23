@@ -2,9 +2,9 @@ import { browser } from 'protractor';
 import { PersonalInformation, PersonalInformationPage } from '../src/page';
 
 describe('Fill form', () => {
-  it('then should fill the form', async () => {
-    const personalInformationPage: PersonalInformationPage = new PersonalInformationPage();
+  const personalInformationPage: PersonalInformationPage = new PersonalInformationPage();
 
+  beforeAll(async () => {
     await browser.get('http://toolsqa.com/automation-practice-form/');
 
     const personalInformation: PersonalInformation = {
@@ -24,10 +24,14 @@ describe('Fill form', () => {
     };
 
     await personalInformationPage.fillForm(personalInformation);
+  });
 
+  it('then should fill the form', async () => {
     await expect(browser.getCurrentUrl())
       .toContain('firstname=Alejandro&lastname=Perdomo');
+  });
 
+  it('then should have the proper title', async () => {
     await expect(personalInformationPage.getTitleText())
       .toBe('Practice Automation Form');
   });
