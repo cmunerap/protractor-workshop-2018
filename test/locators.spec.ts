@@ -13,6 +13,7 @@ describe('Fill form', () => {
       sex: 'Male',
       experience: '7',
       profession: ['Automation Tester'],
+      file: '../../../resources/mercedez.jpg',
       tools: ['Selenium Webdriver'],
       continent: 'South America',
       commands: [
@@ -23,12 +24,17 @@ describe('Fill form', () => {
         'WebElement Commands']
     };
 
-    await personalInformationPage.fillForm(personalInformation);
+    await personalInformationPage.submit(personalInformation);
   });
 
   it('then should fill the form', async () => {
     await expect(browser.getCurrentUrl())
       .toContain('firstname=Alejandro&lastname=Perdomo');
+  });
+
+  it('then file should be uploaded', async () => {
+    await expect(browser.getCurrentUrl())
+      .toContain('mercedez.jpg');
   });
 
   it('then should have the proper title', async () => {
