@@ -1,5 +1,5 @@
 import { ElementFinder, ElementArrayFinder, element, by } from 'protractor';
-import * as path from 'path';
+import { resolve } from 'path';
 
 export interface PersonalInformation {
   firstName?: string;
@@ -94,10 +94,6 @@ export class PersonalInformationPage {
       );
   }
 
-  private resolvePath(file: string) {
-    return path.resolve(__dirname, file);
-  }
-
   public async fillForm(pi: PersonalInformation) {
     await this.firstNameInput.sendKeys(pi.firstName);
     await this.lastNameInput.sendKeys(pi.lastName);
@@ -106,7 +102,7 @@ export class PersonalInformationPage {
     await this.findProfessions(pi.profession).click();
 
     if (pi.file) {
-      await this.fileInput.sendKeys(this.resolvePath(pi.file));
+      await this.fileInput.sendKeys(resolve(__dirname, pi.file));
     }
 
     await this.findTools(pi.tools).click();
