@@ -1,4 +1,5 @@
-import { ElementFinder, ElementArrayFinder, element, by } from 'protractor';
+import { ElementFinder, ElementArrayFinder, element, by, FileDetector, browser } from 'protractor';
+import { resolve } from 'path';
 
 export interface PersonalInformation {
   firstName?: string;
@@ -6,6 +7,7 @@ export interface PersonalInformation {
   sex?: string;
   experience?: string;
   profession?: string[];
+  file?: string;
   tools?: string[];
   continent?: string;
   commands?: string[];
@@ -19,6 +21,7 @@ export class PersonalInformationPage {
   private sexOptions: ElementArrayFinder;
   private experienceOptions: ElementArrayFinder;
   private professionChecks: ElementArrayFinder;
+  private fileInput: ElementFinder;
   private toolsChecks: ElementArrayFinder;
   private continentOptions: ElementArrayFinder;
   private commandsOptions: ElementArrayFinder;
@@ -32,6 +35,7 @@ export class PersonalInformationPage {
     this.sexOptions = element.all(by.name('sex'));
     this.experienceOptions = element.all(by.name('exp'));
     this.professionChecks = element.all(by.name('profession'));
+    this.fileInput = element(by.id('photo'));
     this.toolsChecks = element.all(by.name('tool'));
     this.continentOptions = element(by.name('continents')).all(by.tagName('option'));
     this.commandsOptions = element(by.name('selenium_commands')).all(by.tagName('option'));
@@ -95,17 +99,32 @@ export class PersonalInformationPage {
     await this.lastNameInput.sendKeys(pi.lastName);
     await this.findSex(pi.sex).click();
     await this.findExperience(pi.experience).click();
-
     await this.findProfessions(pi.profession).click();
-    await this.findTools(pi.tools).click();
 
+    if (pi.file) {
+      await browser.setFileDetector(new FileDetector());
+
+      await this.fileInput.sendKeys(resolve(__dirname, pi.file));
+
+      await browser.setFileDetector(undefined);
+    }
+
+    await this.findTools(pi.tools).click();
     await this.findContinent(pi.continent).click();
     await this.findCommands(pi.commands).click();
+  }
+
+  public async submit(pi: PersonalInformation) {
+    await this.fillForm(pi);
 
     await this.submitButton.click();
   }
 
   public getTitleText() {
     return this.titleLabel.getText();
+  }
+
+  public getFileText() {
+    return this.fileInput.getText();
   }
 }
