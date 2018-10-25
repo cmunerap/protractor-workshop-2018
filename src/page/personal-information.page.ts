@@ -1,4 +1,4 @@
-import { ElementFinder, ElementArrayFinder, element, by } from 'protractor';
+import { ElementFinder, ElementArrayFinder, element, by, FileDetector, browser } from 'protractor';
 import { resolve } from 'path';
 
 export interface PersonalInformation {
@@ -102,7 +102,11 @@ export class PersonalInformationPage {
     await this.findProfessions(pi.profession).click();
 
     if (pi.file) {
+      await browser.setFileDetector(new FileDetector());
+
       await this.fileInput.sendKeys(resolve(__dirname, pi.file));
+
+      await browser.setFileDetector(undefined);
     }
 
     await this.findTools(pi.tools).click();
