@@ -1,5 +1,6 @@
 import { ElementFinder, ElementArrayFinder, element, by, FileDetector, browser } from 'protractor';
 import { resolve } from 'path';
+import { DownloadService } from '../services/download.service';
 
 export interface PersonalInformation {
   firstName?: string;
@@ -8,6 +9,7 @@ export interface PersonalInformation {
   experience?: string;
   profession?: string[];
   file?: string;
+  downloadFile?: boolean;
   tools?: string[];
   continent?: string;
   commands?: string[];
@@ -22,10 +24,13 @@ export class PersonalInformationPage {
   private experienceOptions: ElementArrayFinder;
   private professionChecks: ElementArrayFinder;
   private fileInput: ElementFinder;
+  private downloadLink: ElementFinder;
   private toolsChecks: ElementArrayFinder;
   private continentOptions: ElementArrayFinder;
   private commandsOptions: ElementArrayFinder;
   private submitButton: ElementFinder;
+
+  private downloadService: DownloadService;
 
   constructor () {
     this.titleLabel = element(by.className('wpb_content_element')).element(by.tagName('h1'));
@@ -36,11 +41,14 @@ export class PersonalInformationPage {
     this.experienceOptions = element.all(by.name('exp'));
     this.professionChecks = element.all(by.name('profession'));
     this.fileInput = element(by.id('photo'));
+    this.downloadLink = element(by.css('a[href$=".xlsx"]'));
     this.toolsChecks = element.all(by.name('tool'));
     this.continentOptions = element(by.name('continents')).all(by.tagName('option'));
     this.commandsOptions = element(by.name('selenium_commands')).all(by.tagName('option'));
 
     this.submitButton = element(by.id('submit'));
+
+    this.downloadService = new DownloadService();
   }
 
   private findSex(sex: string): ElementFinder {
@@ -109,9 +117,25 @@ export class PersonalInformationPage {
       await browser.setFileDetector(undefined);
     }
 
+    if (pi.downloadFile) {
+      await this.download();
+    }
+
     await this.findTools(pi.tools).click();
     await this.findContinent(pi.continent).click();
     await this.findCommands(pi.commands).click();
+  }
+
+  private async download() {
+    const filename = 'personal-info.xlsx';
+    const link = await this.downloadLink.getAttribute('href');
+
+    await this.downloadService.downloadFile(link, filename);
+  }
+
+  public getDownloadedFileLength() {
+    const filename = 'personal-info.xlsx';
+    return this.downloadService.readFileFromTemp(filename).length;
   }
 
   public async submit(pi: PersonalInformation) {

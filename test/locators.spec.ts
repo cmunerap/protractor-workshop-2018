@@ -14,6 +14,7 @@ describe('Fill form', () => {
       experience: '7',
       profession: ['Automation Tester'],
       file: '../../../resources/mercedez.jpg',
+      downloadFile: true,
       tools: ['Selenium Webdriver'],
       continent: 'South America',
       commands: [
@@ -35,6 +36,11 @@ describe('Fill form', () => {
   it('then file should be uploaded', async () => {
     await expect(browser.getCurrentUrl())
       .toContain('mercedez.jpg');
+  });
+
+  it('then should download the file', async () => {
+    await expect(personalInformationPage.getDownloadedFileLength())
+      .toBeGreaterThan(0);
   });
 
   it('then should have the proper title', async () => {
