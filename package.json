@@ -6,9 +6,10 @@
   "scripts": {
     "clean": "node scripts/clean.js dist reports temp",
     "build": "npm run lint && npm run clean && tsc && echo \"Build is ready!\"",
-    "test": "npm run test:headless",
+    "test": "npm run test:saucelabs",
     "test:local": "npm run build && protractor dist/protractor/config.js",
     "test:headless": "npm run build && protractor dist/protractor/headless.config.js",
+    "test:saucelabs": "npm run build && protractor dist/protractor/saucelabs.config.js",
     "postinstall": "webdriver-manager update --gecko false",
     "lint": "tslint --project tsconfig.json protractor/**/*.ts test/**/*.ts src/**/*.ts"
   },

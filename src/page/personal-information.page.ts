@@ -1,5 +1,6 @@
-import { ElementFinder, ElementArrayFinder, element, by, FileDetector, browser } from 'protractor';
+import { ElementFinder, ElementArrayFinder, element, by, browser } from 'protractor';
 import { resolve } from 'path';
+import * as remote from 'selenium-webdriver/remote';
 import { DownloadService } from '../services/download.service';
 
 export interface PersonalInformation {
@@ -110,11 +111,11 @@ export class PersonalInformationPage {
     await this.findProfessions(pi.profession).click();
 
     if (pi.file) {
-      await browser.setFileDetector(new FileDetector());
+      browser.setFileDetector(new remote.FileDetector());
 
       await this.fileInput.sendKeys(resolve(__dirname, pi.file));
 
-      await browser.setFileDetector(undefined);
+      browser.setFileDetector(undefined);
     }
 
     if (pi.downloadFile) {
